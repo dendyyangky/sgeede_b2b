@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_back_to_back_order" model="ir.ui.view">
+            <field name="name">Purchase Order</field>
+            <field name="model">back.to.back.order</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Order">
+                    <group colspan="4" col="4">
+                        
+                        <!--<field name="partner_id"/>-->
+                        <field name="partner_id" domain="[('supplier','=',True)]"/>
+                        <field name="picking_type_id" domain="[('code','=','incoming')]" widget="selection" context="{'special_shortened_wh_name': True}" />    
+                        <field name="date_order"/>
+                        <field name="location_id"/>
+                        
+                        
+                    </group>
+                        
+                        <field name="line_ids">
+                            
+                            <form string="Sales Order Lines">
+                                    <group>
+                                        <group>
+                                            <field name="product_id" required="1" />
+                                            <field name="qty" required="1" />
+                                            <field name="price" required="1" />
+                                            <field name="subtotal" readonly="1" />
+                                        </group>
+                                    </group>
+                                    
+                                </form>
+                            
+                            
+                            <tree string="Purchase Order Lines" editable="bottom">
+                                    <field name="product_id" required="1" />
+                                    <field name="qty" required="1" />
+                                    <field name="price" required="1" />
+                                    <field name="subtotal" readonly="1" />
+                            </tree>
+
+                        </field>
+                        
+                    <footer>
+                        <button name="wkf_confirm_order" string="Create Purchase Order" type="object"
+                            class="oe_highlight"/>
+                        
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_back_to_back_order" model="ir.actions.act_window">
+            <field name="name">Purchase Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">back.to.back.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+
+        <!-- <record id="view_back_to_back_details" model="ir.ui.view">
+            <field name="name">Purchase details</field>
+            <field name="model">back.to.back_order</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Order" version="7">
+                    <field name="picking_source_location_id" invisible="True"/>
+                    <field name="picking_destination_location_id" invisible="True"/>
+                    <group>
+                        <field name="item_ids"
+                            context="{'default_sourceloc_id':picking_source_location_id,
+                                      'default_destinationloc_id':picking_destination_location_id}" nolabel="1">
+                            <tree string="Inventory Details" editable="bottom" >
+                                <field name="package_id" groups="stock.group_tracking_lot"/>
+                                <field name="product_id" required="True"  context="{'uom':product_uom_id}" on_change="product_id_change(product_id,product_uom_id,context)"/>
+                                <field name="quantity"/>
+                                <button name="split_quantities" string="Split" type="object" icon="STOCK_PREFERENCES" attrs="{'invisible': [('quantity', '=', 1)]}"/>
+                                <field name="product_uom_id" options="{&quot;no_open&quot;: True}" groups="product.group_uom"/>
+                                <field name="sourceloc_id" domain="[('id', 'child_of', parent.picking_source_location_id)]"/>
+                                <field name="destinationloc_id" domain="[('id', 'child_of', parent.picking_destination_location_id)]"/>
+                                <field name="result_package_id" groups="stock.group_tracking_lot" context="{'location_id': destinationloc_id}"/>
+                                <button name="put_in_pack" string="Pack" type="object" icon="terp-product" attrs="{'invisible': [('result_package_id', '!=', False)]}" groups="stock.group_tracking_lot"/>
+                                <field name="lot_id" groups="stock.group_production_lot" domain="[('product_id','=?', product_id)]" context="{'product_id': product_id}"/>
+                            </tree>
+                        </field>
+                    </group>
+                    
+                    <footer>
+                        <button name="do_detailed_transfer" string="_Apply" type="object" class="oe_highlight"/>
+                        or
+                        <button string="_Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record> -->
+
+
+
+
+
+    </data>
+</openerp>
