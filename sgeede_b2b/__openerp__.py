@@ -40,7 +40,7 @@
     'installable': True,
     'active': False,
     'certificate': '',
-    'price': 14.99,
+    'price': 9.99,
     'currency': 'EUR',
     'images': ['images/main_screenshot.png',
     'images/sgeede.png'
