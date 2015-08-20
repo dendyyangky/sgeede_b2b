@@ -62,7 +62,7 @@ class back_to_back_order(osv.osv_memory):
         'line_ids': fields.one2many('back.to.back.order.line','back_order_id', 'Order Lines', required=True),
         'location_id': fields.many2one('stock.location', 'Destination', required=True, domain=[('usage','<>','view')]),
         'picking_type_id': fields.many2one('stock.picking.type', 'Deliver To', help="This will determine picking type of incoming shipment", required=True),
-        'pricelist_id':fields.many2one('product.pricelist', 'Pricelist', required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}, help="The pricelist sets the currency used for this purchase order. It also computes the supplier price for the selected products/quantities."),
+        'pricelist_id':fields.many2one('product.pricelist', 'Pricelist', required=False, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}, help="The pricelist sets the currency used for this purchase order. It also computes the supplier price for the selected products/quantities."),
         
     }
     
@@ -165,9 +165,9 @@ class back_to_back_order(osv.osv_memory):
                     }
                     line_id = self.pool.get('purchase.order.line').create(cr, uid, values, context=context)
     #                self.pool.get('purchase.order.line').action_confirm(cr, uid, [line_id], context)
-            if purchase_id:
-                purchase_obj.signal_workflow(cr, uid, [purchase_id], 'purchase_confirm')
-                self.pool.get('sale.order').write(cr, uid, [context['active_id']], {'purchase_id' : purchase_id})
+           # if purchase_id:
+           #     purchase_obj.signal_workflow(cr, uid, [purchase_id], 'purchase_confirm')
+           #     self.pool.get('sale.order').write(cr, uid, [context['active_id']], {'purchase_id' : purchase_id})
             
         return 
 
