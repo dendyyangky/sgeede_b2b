@@ -62,7 +62,7 @@ class back_to_back_order(osv.osv_memory):
         'line_ids': fields.one2many('back.to.back.order.line','back_order_id', 'Order Lines', required=True),
         'location_id': fields.many2one('stock.location', 'Destination', required=True, domain=[('usage','<>','view')]),
         'picking_type_id': fields.many2one('stock.picking.type', 'Deliver To', help="This will determine picking type of incoming shipment", required=True),
-        'pricelist_id':fields.many2one('product.pricelist', 'Pricelist', required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}, help="The pricelist sets the currency used for this purchase order. It also computes the supplier price for the selected products/quantities."),
+        'pricelist_id':fields.many2one('product.pricelist', 'Pricelist', required=False, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}, help="The pricelist sets the currency used for this purchase order. It also computes the supplier price for the selected products/quantities."),
         
     }
     
@@ -113,7 +113,7 @@ class back_to_back_order(osv.osv_memory):
                 'picking_type_id':po.picking_type_id.id,
                 'location_id': po.location_id.id,
                 'invoice_method': 'order',
-                'pricelist_id': po.partner_id.property_product_pricelist_purchase.id,
+                'pricelist_id': po.partner_id.property_product_pricelist_purchase and po.partner_id.property_product_pricelist_purchase.id,
                 'state': 'confirmed',
                 'validator' : uid
                 
