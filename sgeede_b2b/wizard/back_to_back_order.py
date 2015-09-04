@@ -86,7 +86,7 @@ class back_to_back_order(osv.osv_memory):
             item = {
                     'product_id': line.product_id.id,
                     'qty': line.product_uom_qty,
-                    'price': line.price_unit,
+                    'price': line.product_id.standard_price,
                     'subtotal': line.price_subtotal
                 }
             if line.product_id:
