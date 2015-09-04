@@ -23,7 +23,7 @@
 
 {
     'name': 'Back To Back Purchase Order from Sales order',
-    'version': '1.1',
+    'version': '1.2',
     'category': 'Tools',
     'summary': """Generate Back to Back Purchase order in Sale order""",
     'description': """Generate Back to Back Purchase order in Sale order""",
