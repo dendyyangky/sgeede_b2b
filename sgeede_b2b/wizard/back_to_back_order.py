@@ -114,7 +114,6 @@ class back_to_back_order(osv.osv_memory):
                 'location_id': po.location_id.id,
                 'invoice_method': 'order',
                 'pricelist_id': po.partner_id.property_product_pricelist_purchase.id,
-                'state': 'confirmed',
                 'validator' : uid
                 
                 
@@ -160,7 +159,6 @@ class back_to_back_order(osv.osv_memory):
                         'price_subtotal': line.subtotal,
                         'order_id': purchase_id,
                         'sale_order_id': context['active_id'],
-                        'state': 'confirmed',
 
                     }
                     line_id = self.pool.get('purchase.order.line').create(cr, uid, values, context=context)
