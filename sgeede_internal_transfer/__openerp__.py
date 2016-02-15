@@ -22,7 +22,7 @@
 
 
 {
-    'name': 'Enhanced Advance Internal Transfer',
+    'name': 'Warehouse Advance Internal Transfer',
     'version': '1.1',
     'category': 'Tools',
     'summary': """Odoo's enhanced advance stock internal transfer module""",
