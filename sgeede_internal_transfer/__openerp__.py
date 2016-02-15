@@ -24,7 +24,7 @@
 {
     'name': 'Warehouse Advance Internal Transfer',
     'version': '1.1',
-    'category': 'Tools',
+    'category': 'Warehouse',
     'summary': """Odoo's enhanced advance stock internal transfer module""",
     'description': """Odoo's enhanced advance stock internal transfer module""",
     'author': 'SGEEDE',
