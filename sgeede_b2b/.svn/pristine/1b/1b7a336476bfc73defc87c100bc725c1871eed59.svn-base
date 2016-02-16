@@ -8,19 +8,22 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
-                <xpath expr="//button[@name='invoice_cancel']" position="after">
+                <xpath expr="//button[@name='action_done']" position="after">
                     
-                         <button name="%(action_view_back_to_back_order)d" states="draft" string="Create Purchase Order" type="action" groups="base.group_user"/>
+                         <button name="%(action_view_back_to_back_order)d" states="draft" class="btn-primary" string="Create Purchase Order" type="action" groups="base.group_user"/>
                     </xpath>
-                     <xpath expr="//page[@string='Other Information']" position="after">
+                    <page position="after">
                         <page string="Back to Back Purchase Order" >
-<!--                         <group name="purchase" groups="base.group_user">
+                        <group name="purchase" groups="base.group_user">
                             <field name="purchase_id" readonly="1"/>
-                        </group>   -->
+                        </group>  
                         <field name="purchase_line_ids" readonly="1"/>
                                 
                         </page>
-                   </xpath>
+                    </page>
+<!--                     <xpath expr="//page[@string='Other Information']" position="after">
+                        
+                   </xpath>-->
             </field>
         </record>
         
