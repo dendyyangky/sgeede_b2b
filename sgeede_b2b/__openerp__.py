@@ -23,7 +23,7 @@
 
 {
     'name': 'Back To Back Purchase Order from Sales order',
-    'version': '1.3',
+    'version': '1.0',
     'category': 'Tools',
     'summary': """Generate Back to Back Purchase order in Sale order""",
     'description': """Generate Back to Back Purchase order in Sale order""",
@@ -34,6 +34,7 @@
     'update_xml': [
          'wizard/back_to_back_order.xml',
          'sale_view.xml',
+         'purchase_view.xml',
          
     ],
     'demo_xml': [],

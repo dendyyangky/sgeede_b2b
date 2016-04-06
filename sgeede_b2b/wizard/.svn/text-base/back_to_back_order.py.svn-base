@@ -56,38 +56,115 @@ class back_to_back_order(osv.osv_memory):
         return types[0]
     
     
+#    def _get_pricelist(self, cr, uid, context=None):
+#        ctx = dict(context or {})
+#        order = self.pool.get('sale.order').browse(cr, uid, ctx['active_id'], context=context)
+#        print order.partner_id.name
+#        
+#        partner_id = context.get('partner_id', False)
+#        if partner_id:
+#            pricelist_ids = self.pool.get('res.partner').browse(cr, uid, order.partner_id.id).property_product_pricelist_purchase.id
+#            return pricelist_ids[0]
+#        else:
+#            return False
+        
+        
+    
+    def onchange_partner_id(self, cr, uid, ids, partner_id, context=None):
+        partner = self.pool.get('res.partner')
+        if not partner_id:
+            return {}
+        supplier = partner.browse(cr, uid, partner_id, context=context)
+        return {'value': {
+            'pricelist_id': supplier.property_product_pricelist_purchase.id,
+#            'fiscal_position': supplier.property_account_position and supplier.property_account_position.id or False,
+#            'payment_term_id': supplier.property_supplier_payment_term.id or False,
+            }}
+    
+    
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Supplier', required=True),
         'date_order':     fields.datetime('Date Order', required=True),
         'line_ids': fields.one2many('back.to.back.order.line','back_order_id', 'Order Lines', required=True),
         'location_id': fields.many2one('stock.location', 'Destination', required=True, domain=[('usage','<>','view')]),
         'picking_type_id': fields.many2one('stock.picking.type', 'Deliver To', help="This will determine picking type of incoming shipment", required=True),
-        'pricelist_id':fields.many2one('product.pricelist', 'Pricelist', required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}, help="The pricelist sets the currency used for this purchase order. It also computes the supplier price for the selected products/quantities."),
+        'pricelist_id':fields.many2one('product.pricelist', 'Pricelist', help="The pricelist sets the currency used for this purchase order. It also computes the supplier price for the selected products/quantities."),
+        'currency_id': fields.many2one('res.currency','Currency', readonly=True),
         
     }
     
     _defaults = {
         'date_order': fields.datetime.now,
-        'pricelist_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('res.partner').browse(cr, uid, context['partner_id']).property_product_pricelist_purchase.id,
-        'location_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.partner_id.property_stock_customer.id,
+#        'pricelist_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('res.partner').browse(cr, uid, context['partner_id']).property_product_pricelist_purchase.id,
+#        'pricelist_id': _get_pricelist,
         
+        'location_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.partner_id.property_stock_customer.id,
+        'currency_id': lambda self, cr, uid, context: self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.currency_id.id,
         'picking_type_id': _get_picking_in,
     }
     
     
+    def onchange_pricelist(self, cr, uid, ids, pricelist_id, line_ids,partner_id, context=None):
+        product_pricelist = self.pool.get('product.pricelist')
+        
+        if not pricelist_id or not line_ids :
+            return {}
+        else:
+            items = [(6, 0, [])]
+            for line in line_ids:
+                val = line[2]
+                if not val:
+                    continue
+                else:
+                    product = self.pool.get('product.product').browse(cr, uid, int(val['product_id']), context=context)
+                    date_order = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    
+                    date_order_str = datetime.strptime(date_order, DEFAULT_SERVER_DATETIME_FORMAT).strftime(DEFAULT_SERVER_DATE_FORMAT)
+                    price = product_pricelist.price_get(cr, uid, [int(pricelist_id)],
+                            product.id, val['qty'] or 1.0, int(partner_id) or False, {'uom': product.uom_po_id.id, 'date': date_order_str})[int(pricelist_id)]
+                    if price is False:
+                        price = product.standard_price
+                    item = 0,0,{'product_id': val['product_id'],
+                            'qty': val['qty'],
+                            'price': price or 0.0,
+                            'subtotal': price * val['qty']
+                            }
+                    if val['product_id']:
+                        items.append(item)
+                    
+            return {'value': {'currency_id': self.pool.get('product.pricelist').browse(cr, uid, pricelist_id, context=context).currency_id.id,
+                      'line_ids' : items}}
+
+    
     def default_get(self, cr, uid, fields, context=None):
+        product_pricelist = self.pool.get('product.pricelist')
         if context is None:
             context = {}
         res = super(back_to_back_order, self).default_get(cr, uid, fields, context=context)
         order = self.pool.get('sale.order').browse(cr, uid, context['active_id'], context=context)
         items = []
+        date_order = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         for line in order.order_line:
-            print line.price_subtotal
+            
+            # - determine price_unit and taxes_id
+            price = 0.0
+            if 'pricelist_id' in res:
+                if res['pricelist_id']:
+                    date_order_str = datetime.strptime(date_order, DEFAULT_SERVER_DATETIME_FORMAT).strftime(DEFAULT_SERVER_DATE_FORMAT)
+                    price = product_pricelist.price_get(cr, uid, [res['pricelist_id']],
+                            line.product_id.id, line.product_uom_qty or 1.0, line.partner_id.id or False, {'uom': line.product_id.uom_po_id.id, 'date': date_order_str})[res['pricelist_id']]
+                else:
+    #                    price = product.standard_price
+                    price = line.product_id.standard_price
+            else:
+                price = line.product_id.standard_price
+
+
             item = {
                     'product_id': line.product_id.id,
                     'qty': line.product_uom_qty,
-                    'price': line.price_unit,
-                    'subtotal': line.price_subtotal
+                    'price': price,
+                    'subtotal': price * line.product_uom_qty
                 }
             if line.product_id:
                 items.append(item)
@@ -113,8 +190,8 @@ class back_to_back_order(osv.osv_memory):
                 'picking_type_id':po.picking_type_id.id,
                 'location_id': po.location_id.id,
                 'invoice_method': 'order',
-                'pricelist_id': po.partner_id.property_product_pricelist_purchase.id,
-                'state': 'confirmed',
+                'pricelist_id': po.partner_id.property_product_pricelist_purchase and po.partner_id.property_product_pricelist_purchase.id,
+#                'state': 'confirmed',
                 'validator' : uid
                 
                 
@@ -160,14 +237,14 @@ class back_to_back_order(osv.osv_memory):
                         'price_subtotal': line.subtotal,
                         'order_id': purchase_id,
                         'sale_order_id': context['active_id'],
-                        'state': 'confirmed',
+#                        'state': 'confirmed',
 
                     }
                     line_id = self.pool.get('purchase.order.line').create(cr, uid, values, context=context)
     #                self.pool.get('purchase.order.line').action_confirm(cr, uid, [line_id], context)
-            if purchase_id:
-                purchase_obj.signal_workflow(cr, uid, [purchase_id], 'purchase_confirm')
-                self.pool.get('sale.order').write(cr, uid, [context['active_id']], {'purchase_id' : purchase_id})
+            # if purchase_id:
+            #     purchase_obj.signal_workflow(cr, uid, [purchase_id], 'purchase_confirm')
+            #     self.pool.get('sale.order').write(cr, uid, [context['active_id']], {'purchase_id' : purchase_id})
             
         return 
 
