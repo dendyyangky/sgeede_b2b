@@ -26,17 +26,17 @@
                                             <field name="product_id" required="1" />
                                             <field name="qty" required="1" />
                                             <field name="price" required="1" />
+                                            <field name="taxes_ids" required="1" />
                                             <field name="subtotal" readonly="1" />
                                         </group>
                                     </group>
-                                    
-                                </form>
-                            
-                            
+                            </form>
+                                
                             <tree string="Purchase Order Lines" editable="bottom">
-                                    <field name="product_id" required="1" />
-                                    <field name="qty" required="1" />
-                                    <field name="price" required="1" />
+                                    <field name="product_id" on_change='onchange_product_id(product_id)'/>
+                                     <field name="qty" on_change='onchange_price(price,qty)'/>
+                                    <field name="price" on_change='onchange_price(price,qty)'/>
+                                    <field name="taxes_ids" colspan="2" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]"/>
                                     <field name="subtotal" readonly="1" />
                             </tree>
 
@@ -45,8 +45,6 @@
                     <footer>
                         <button name="wkf_confirm_order" string="Create Purchase Order" type="object"
                             class="oe_highlight"/>
-                        
-                        or
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>
                 </form>
@@ -61,9 +59,6 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
-
-
-
         <!-- <record id="view_back_to_back_details" model="ir.ui.view">
             <field name="name">Purchase details</field>
             <field name="model">back.to.back_order</field>
@@ -98,10 +93,5 @@
                 </form>
             </field>
         </record> -->
-
-
-
-
-
     </data>
 </openerp>

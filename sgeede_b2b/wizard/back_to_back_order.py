@@ -68,8 +68,6 @@ class back_to_back_order(osv.osv_memory):
 #        else:
 #            return False
         
-        
-    
     def onchange_partner_id(self, cr, uid, ids, partner_id, context=None):
         partner = self.pool.get('res.partner')
         if not partner_id:
@@ -80,7 +78,6 @@ class back_to_back_order(osv.osv_memory):
 #            'fiscal_position': supplier.property_account_position and supplier.property_account_position.id or False,
 #            'payment_term_id': supplier.property_supplier_payment_term.id or False,
             }}
-    
     
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Supplier', required=True),
@@ -102,7 +99,6 @@ class back_to_back_order(osv.osv_memory):
         'currency_id': lambda self, cr, uid, context: self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.currency_id.id,
         'picking_type_id': _get_picking_in,
     }
-    
     
     def onchange_pricelist(self, cr, uid, ids, pricelist_id, line_ids,partner_id, context=None):
         product_pricelist = self.pool.get('product.pricelist')
@@ -127,7 +123,8 @@ class back_to_back_order(osv.osv_memory):
                     item = 0,0,{'product_id': val['product_id'],
                             'qty': val['qty'],
                             'price': price or 0.0,
-                            'subtotal': price * val['qty']
+                            'subtotal': price * val['qty'],
+                            'taxes_ids' : val['taxes_ids']
                             }
                     if val['product_id']:
                         items.append(item)
@@ -145,31 +142,31 @@ class back_to_back_order(osv.osv_memory):
         items = []
         date_order = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         for line in order.order_line:
-            
-            # - determine price_unit and taxes_id
+            tax_ids = []
+            for tax in line.product_id.supplier_taxes_id:
+                tax_ids.append(tax.id) 
+                
             price = 0.0
             if 'pricelist_id' in res:
                 if res['pricelist_id']:
                     date_order_str = datetime.strptime(date_order, DEFAULT_SERVER_DATETIME_FORMAT).strftime(DEFAULT_SERVER_DATE_FORMAT)
                     price = product_pricelist.price_get(cr, uid, [res['pricelist_id']],
-                            line.product_id.id, line.product_uom_qty or 1.0, line.partner_id.id or False, {'uom': line.product_id.uom_po_id.id, 'date': date_order_str})[res['pricelist_id']]
+                            line.product_id.id,line.price_unit, line.product_uom_qty or 1.0, line.partner_id.id or False, {'uom': line.product_id.uom_po_id.id, 'date': date_order_str})[res['pricelist_id']]
                 else:
-    #                    price = product.standard_price
+#                       price = product.standard_price
                     price = line.product_id.standard_price
             else:
                 price = line.product_id.standard_price
 
-
             item = {
                     'product_id': line.product_id.id,
                     'qty': line.product_uom_qty,
-                    'price': price,
-                    'subtotal': price * line.product_uom_qty
+                    'price': line.price_unit,
+                    'taxes_ids':[(6,0,tax_ids)],
+                    'subtotal': line.price_unit * line.product_uom_qty
                 }
             if line.product_id:
                 items.append(item)
-
-
         res.update(line_ids=items)
         return res
     
@@ -193,13 +190,9 @@ class back_to_back_order(osv.osv_memory):
                 'pricelist_id': po.partner_id.property_product_pricelist_purchase and po.partner_id.property_product_pricelist_purchase.id,
 #                'state': 'confirmed',
                 'validator' : uid
-                
-                
             }
             
             purchase_id = purchase_obj.create(cr, uid, vals, context=context)
-                
-            
             context_partner = context.copy()
             if po.partner_id.id:
                 lang = res_partner.browse(cr, uid, po.partner_id.id).lang
@@ -227,6 +220,10 @@ class back_to_back_order(osv.osv_memory):
                                     res['warning'] = {'title': _('Warning!'), 'message': _('The selected supplier has a minimal quantity set to %s %s, you should not purchase less.') % (supplierinfo.min_qty, supplierinfo.product_uom.name)}
                                 line.qty = min_qty
                     dt = purchase_line_obj._get_date_planned(cr, uid, supplierinfo, date_order, context=context).strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+                    tax_ids = []
+                    for tax in line.taxes_ids:
+                        tax_ids.append(tax.id) 
+
                     values = {
                         'product_id': line.product_id.id,
                         'name': name,
@@ -237,6 +234,7 @@ class back_to_back_order(osv.osv_memory):
                         'price_subtotal': line.subtotal,
                         'order_id': purchase_id,
                         'sale_order_id': context['active_id'],
+                        'taxes_id':[(6,0,tax_ids)],
 #                        'state': 'confirmed',
 
                     }
@@ -253,6 +251,16 @@ class back_to_back_order_line(osv.osv_memory):
     _name = "back.to.back.order.line"
     _description = "Back to Back Order"
     
+    def onchange_product_id(self, cr, uid, ids, product_id, context=None):
+        price = self.pool.get("product.product").browse(cr, uid, product_id).list_price if product_id else 0
+        taxes_id = self.pool.get("product.product").browse(cr, uid, product_id).supplier_taxes_id if product_id else []
+        tax_ids = []
+        for tax in taxes_id:
+            tax_ids.append(tax.id)
+        return {'value': {'price': price, 'taxes_ids': [(6,0,tax_ids)]}}
+    
+    def onchange_price(self, cr, uid, ids, price, qty, context=None):
+        return {'value': {'subtotal': price* qty}}
     
     def _amount_line(self, cr, uid, ids, prop, arg, context=None):
         res = {}
@@ -263,7 +271,6 @@ class back_to_back_order_line(osv.osv_memory):
             cur = line.back_order_id.pricelist_id.currency_id
             res[line.id] = cur_obj.round(cr, uid, cur, taxes['total'])
         return res
-    
     
     
     def _get_uom_id(self, cr, uid, context=None):
@@ -285,10 +292,9 @@ class back_to_back_order_line(osv.osv_memory):
         'subtotal': fields.function(_amount_line, string='Subtotal', digits_compute= dp.get_precision('Account')),
         'taxes_id': fields.many2many('account.tax', 'purchase_order_taxe', 'ord_id', 'tax_id', 'Taxes'),
         'product_uom': fields.many2one('product.uom', 'Product Unit of Measure', required=True),
-        
-           
+        'taxes_ids': fields.many2many('account.tax', 'purchase_order_taxe', 'ord_id', 'tax_id', 'Taxes'),
+         
     }
-    
     
     _defaults = {
         'product_uom' : _get_uom_id,
