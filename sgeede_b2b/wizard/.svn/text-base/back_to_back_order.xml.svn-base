@@ -37,7 +37,6 @@
                                     <field name="product_id" required="1" />
                                     <field name="qty" required="1" />
                                     <field name="price" required="1" />
-                                    <field name="taxes_ids" colspan="2" widget="many2many_tags"/>
                                     <field name="subtotal" readonly="1" />
                             </tree>
 

@@ -124,8 +124,7 @@ class back_to_back_order(osv.osv_memory):
                         item = 0,0,{'product_id': val['product_id'],
                                 'qty': val['qty'],
                                 'price': price_unit or 0.0,
-                                'subtotal': price_unit * val['qty'],
-                                'taxes_ids' : val['taxes_ids']
+                                'subtotal': price_unit * val['qty']
                                 }
                         if val['product_id']:
                             items.append(item)
@@ -180,8 +179,7 @@ class back_to_back_order(osv.osv_memory):
                     item = 0,0,{'product_id': val['product_id'],
                             'qty': val['qty'],
                             'price': price or 0.0,
-                            'subtotal': price * val['qty'],
-                            'taxes_ids' : val['taxes_ids']
+                            'subtotal': price * val['qty']
                             }
                     if val['product_id']:
                         items.append(item)
@@ -199,9 +197,6 @@ class back_to_back_order(osv.osv_memory):
         items = [(6, 0, [])]
         date_order = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         for line in order.order_line:
-            tax_ids = []
-            for tax in line.product_id.supplier_taxes_id:
-                tax_ids.append(tax.id) 
             
             # - determine price_unit and taxes_id
             price = 0.0
@@ -221,7 +216,6 @@ class back_to_back_order(osv.osv_memory):
                     'product_id': line.product_id.id,
                     'qty': line.product_uom_qty,
                     'price': price,
-                    'taxes_ids':[(6,0,tax_ids)],
                     'subtotal': price * line.product_uom_qty
                 }
             if line.product_id:
@@ -290,9 +284,6 @@ class back_to_back_order(osv.osv_memory):
                                 line.qty = min_qty
 #                    dt = purchase_line_obj._get_date_planned(cr, uid, supplierinfo, date_order, context=context).strftime(DEFAULT_SERVER_DATETIME_FORMAT)
                     date_planned = purchase_line_obj._get_date_planned(cr, uid, seller, po=po).strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-                    tax_ids = []
-                    for tax in line.taxes_ids:
-                        tax_ids.append(tax.id) 
                     values = {
                         'product_id': line.product_id.id,
                         'name': name,
@@ -303,7 +294,6 @@ class back_to_back_order(osv.osv_memory):
                         'price_subtotal': line.subtotal,
                         'order_id': purchase_id,
                         'sale_order_id': context['active_id'],
-                        'taxes_id':[(6,0,tax_ids)],
 #                        'state': 'confirmed',
 
                     }
@@ -353,7 +343,7 @@ class back_to_back_order_line(osv.osv_memory):
         'subtotal': fields.function(_amount_line, string='Subtotal', digits_compute= dp.get_precision('Account')),
         'taxes_id': fields.many2many('account.tax', 'purchase_order_taxe', 'ord_id', 'tax_id', 'Taxes'),
         'product_uom': fields.many2one('product.uom', 'Product Unit of Measure', required=True),
-        'taxes_ids': fields.many2many('account.tax', 'purchase_order_taxe', 'ord_id', 'tax_id', 'Taxes'),
+        
            
     }
     

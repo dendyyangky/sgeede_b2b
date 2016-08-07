@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='action_done']" position="after">
                     
-                         <button name="%(action_view_back_to_back_order)d" class="btn-primary" string="Create Purchase Order" type="action" groups="base.group_user"/>
+                         <button name="%(action_view_back_to_back_order)d" class="btn-primary-view-back-to-back-order" string="Create Purchase Order" type="action" groups="base.group_user"/>
                     </xpath>
                     <page position="after">
                         <page string="Back to Back Purchase Order" >
