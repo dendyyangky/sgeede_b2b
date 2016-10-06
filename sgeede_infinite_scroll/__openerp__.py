@@ -40,5 +40,7 @@
     'demo_xml': [],
     'installable': True,
     'active': False,
+    'price': 14.99,
+    'currency': 'EUR',
 }
 
