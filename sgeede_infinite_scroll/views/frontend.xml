@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_frontend" inherit_id="website.assets_frontend" name="Custom CSS and JS">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/sgeede_infinite_scroll/static/src/js/infinite.scroll.js"></script>
+                <script type="text/javascript" src="/sgeede_infinite_scroll/static/src/js/jquery.masonry.js"></script>
+                <script type="text/javascript" src="/sgeede_infinite_scroll/static/src/js/script.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

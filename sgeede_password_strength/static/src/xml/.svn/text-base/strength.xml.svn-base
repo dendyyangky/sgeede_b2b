@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template id="template" xml:space="preserve">
+        <t t-extend="ChangePassword">
+            <t t-jquery="input[name='new_password']" t-operation="replace">
+                <input type="password"  name="new_password" onkeyup="CheckPasswordStrength(this.value)"
+                       minlength="1"/>
+            </t>
+            <t t-jquery="input[name='new_password']" t-operation="after">
+                <td  class="password_strength">Password not entered</td>
+            </t>
+            <t t-jquery="input[name='confirm_pwd']" t-operation="replace">
+                <input type="password" name="confirm_pwd" onkeyup="CheckPassword(new_password.value, this.value)"
+                       minlength="1"/>
+            </t>
+            <t t-jquery="input[name='confirm_pwd']" t-operation="after">
+                <td  class="password_confirm">Password not entered</td>
+            </t>
+            <t t-jquery="input[name='confirm_pwd']" t-operation="after">
+                <input name="varpassword_strength" minlength="1" style="display: none"/>
+            </t>
+        </t>
+</template>

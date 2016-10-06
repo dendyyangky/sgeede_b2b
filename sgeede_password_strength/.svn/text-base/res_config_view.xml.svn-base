@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="password_form_view" model="ir.ui.view">
+            <field name="name">password.strength.form.view</field>
+            <field name="model">password.strength</field>
+            <field name="arch" type="xml">
+                <form string="Password Strength Level">
+                    <field name="company_id" on_change="on_change_company_id(company_id)" invisible="1"/>
+                    <group>
+                        <field name="level" widget="selection"/>
+                    </group>
+                    <footer >
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_password_form" model="ir.actions.act_window">
+            <field name="name">Password Strength</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">password.strength</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            name="Password Strength"
+            action="action_password_form"
+            id="password_group_menu"
+            parent="base.menu_users" sequence="1"/>
+    </data>
+</openerp>
