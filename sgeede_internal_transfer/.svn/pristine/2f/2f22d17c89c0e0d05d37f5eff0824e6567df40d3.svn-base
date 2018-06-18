@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_sgeede_config_settings" model="ir.ui.view">
+		<field name="name">SGEEDE Internal Transfer Settings</field>
+		<field name="model">sgeede.config.settings</field>
+		<field name="arch" type="xml">
+			<form string="Configure SGEEDE Internal Transfer" class="oe_form_configuration">
+				<header>
+					<button string="Apply" type="object" name="execute" class="oe_highlight"/>
+					<div style="clear:both"/>
+				</header>
+				<sheet>
+					<separator string="Please setup your transit location during transferring" />
+					<group>
+						<field name="company_id" invisible="1"/>
+						<field  name="transit_location_id" required="1" domain="[('usage', '=', 'transit')]"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="sgeede_action_configuration" model="ir.actions.act_window">
+		<field name="name">General Settings</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sgeede.config.settings</field>
+		<field name="view_mode">form</field>
+		<field name="target">inline</field>
+	</record>
+
+	<menuitem id="sgeede_parent_menu_configuration_view" parent="base.menu_administration" name="Configuration"/>
+	<menuitem id="sgeede_menu_configuration_view" parent="sgeede_parent_menu_configuration_view" name="Internal Transfer" action="sgeede_action_configuration"/>
+	<!-- <menuitem id="sgeede_menu_configuration_view" parent="stock.menu_stock_config_settings" name="Internal Transfer Configuration" action="sgeede_action_configuration"/> --> <!-- Use this to place it inside the inventory settings -->
+
+</odoo>

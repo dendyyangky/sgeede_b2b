@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sgeede_config_settings,sgeede.config.settings,model_sgeede_config_settings,,1,1,1,1
+access_stock_internal_transfer,sgeede.stock.internal.transfer,model_stock_internal_transfer,,1,1,1,1
+
