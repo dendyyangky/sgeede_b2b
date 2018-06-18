@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="wkf_stock_int_transfer" model="workflow">
+		<field name="name">stock.internal.transfer.basic</field>
+		<field name="osv">stock.internal.transfer</field>
+		<field name="on_create">True</field>
+	</record>
+	<!-- Stock Internal Transfer -->
+	<record id="stock_act_draft" model="workflow.activity">
+		<field name="wkf_id" ref="wkf_stock_int_transfer"/>
+		<field name="name">draft</field>
+		<field name="flow_start">True</field>
+		<field name="kind">function</field>
+		<field name="action">action_draft()</field>
+	</record>
+	<record id="stock_act_cancel" model="workflow.activity">
+		<field name="wkf_id" ref="wkf_stock_int_transfer"/>
+		<field name="name">cancel</field>
+		<field name="kind">function</field>
+		<field name="action">action_cancel()</field>
+	</record>
+	<record id="stock_act_send" model="workflow.activity">
+		<field name="wkf_id" ref="wkf_stock_int_transfer"/>
+		<field name="name">send</field>
+		<field name="kind">function</field>
+		<field name="action">action_send()</field>
+	</record>
+	<record id="stock_act_receive" model="workflow.activity">
+		<field name="wkf_id" ref="wkf_stock_int_transfer"/>
+		<field name="send">send</field>
+		<field name="kind">function</field>
+		<field name="action">action_send()</field>
+	</record>
+	<record>
+		<field name="wkf_id" ref="wkf_stock_int_transfer"/>
+		<field name="name">receive</field>
+		<field name="kind">stopall</field>
+		<field name="flow_stop">True</field>
+		<field name="action">action_receive()</field>
+	</record>
+	<record id="stock_draft_cancel" model="workflow.transition">
+		<field name="act_from" ref="stock_act_draft"/>
+		<field name="act_to" ref="stock_act_cancel"/>
+		<field name="signal">action_cancel</field>
+	</record>
+	<record id="stock_send_cancel" model="workflow.transition">
+		<field name="act_from" ref="stock_act_send"/>
+		<field name="act_to" ref="stock_act_cancel"/>
+		<field name="signal">action_cancel</field>
+	</record>
+	<record id="stock_draft_send" model="workflow.transition">
+		<field name="act_from" ref="stock_act_draft"/>
+		<field name="act_to" ref="stock_act_send"/>
+		<field name="signal">action_send</field>
+	</record>
+	<record id="stock_send_receive" model="workflow.transition">
+		<field name="act_from" ref="stock_act_send"/>
+		<field name="act_to" ref="stock_act_receive"/>
+		<field name="signal">action_receive</field>
+	</record>
+</odoo>
