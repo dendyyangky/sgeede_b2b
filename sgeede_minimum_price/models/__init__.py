@@ -1,0 +1,3 @@
+import product_extend
+import sale_order_extend
+import account_invoice_extend

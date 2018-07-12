@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="assets_backend" name="sgeede_minimum_price assets" inherit_id="web.assets_backend">
+			<xpath expr="." position="inside">
+				<script type="text/javascript" src="/sgeede_minimum_price/static/src/js/point_of_sale_js_extend.js"></script>
+			</xpath>
+		</template>
+	</data>
+</openerp>
