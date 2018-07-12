@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution   
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -21,29 +21,28 @@
 ##############################################################################
 
 {
-	'name': 'SGEEDE Minimum Price Module',
-	'version': '1.0',
-	'category': 'Tools',
-	'summary': """Lock and control your minimum sale price to POS, Sales Order and Invoice""",
-	'description': """Lock and control your minimum sale price to POS, Sales Order and Invoice""",
-	'author': "SGEEDE",
-	'website': "http://www.sgeede.com",
-	'depends': ['sale', 'point_of_sale'],
-	'init_xml': [],
-	'update_xml': [
-		'views/product_extend_view.xml',
-		'views/point_of_sale_extend.xml',
-		'views/account_invoice_workflow.xml',
-	],
-	'qweb': ['static/src/xml/*.xml'],
-	'demo_xml': [],
-	'installable': True,
+    'name': 'SGEEDE Minimum Price Module',
+    'version': '1.0',
+    'category': 'Tools',
+    'summary': """Lock and control your minimum sale price to POS, Sales Order and Invoice""",
+    'description': """Lock and control your minimum sale price to POS, Sales Order and Invoice""",
+    'author': "SGEEDE",
+    'website': "http://www.sgeede.com",
+    'depends': ['sale', 'point_of_sale'],
+    'init_xml': [],
+    'update_xml': [
+        'views/product_extend_view.xml',
+        'views/point_of_sale_extend.xml',
+        'views/account_invoice_workflow.xml',
+    ],
+    'qweb': ['static/src/xml/*.xml'],
+    'demo_xml': [],
+    'installable': True,
     'active': False,
-	'price': 9.99,
-	'certificate': '',
-	'currency': 'EUR',
-	'images': [
-		'images/sgeede.png',
-		'images/main_screenshot.png'
-	],
+    'price': 9.99,
+    'certificate': '',
+    'currency': 'EUR',
+    'images': ['images/main_screenshot.png',
+    'images/sgeede.png'
+    ],
 }
