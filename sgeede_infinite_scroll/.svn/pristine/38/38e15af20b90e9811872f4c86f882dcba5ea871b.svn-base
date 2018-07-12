@@ -1,0 +1,17 @@
+# -*- encoding utf-8 -*-
+{
+	"name": "SGEEDE Infinite Scroll",
+	"version": "1.0",
+	"depends": ['website', 'website_sale'],
+	"author": "SGEEDE",
+	"category": "Custom Development",
+	"description": """
+		SGEEDE Infinite Scroll. Allow infinite scroll in Products without using pagination anymore.
+	""",
+	'data': [
+		'views/frontend.xml',
+		'views/templates.xml',
+	],
+	'installable': True,
+	'active': False,
+}
