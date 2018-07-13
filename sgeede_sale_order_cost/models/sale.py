@@ -8,7 +8,6 @@ class SaleOrderLine(models.Model):
 	@api.multi
 	@api.onchange('product_id')
 	def get_cost(self):
-		print "get_cost is called"
 		if not self.product_id:
 			return False
 
@@ -30,8 +29,6 @@ class SaleOrderLine(models.Model):
 			for field in onchange_fields:
 				if field not in values:
 					values[field] = line._fields[field].convert_to_write(line[field], line)
-		print "values in create"
-		print values
 		line = super(SaleOrderLine, self).create(values)
 		if line.state == 'sale':
 			line.action_procurement_create()
