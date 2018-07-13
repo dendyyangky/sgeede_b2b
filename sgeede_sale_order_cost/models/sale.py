@@ -21,8 +21,6 @@ class sale_order_line(models.Model):
 #overriding prepare_add_missing_field to include cost 
 	@api.model
 	def _prepare_add_missing_fields(self, values):
-		print ("values needs to be checked===========")
-		print (values)
 		res = {}
 		onchange_fields = ['name', 'price_unit', 'product_uom', 'tax_id', 'unit_cost']
 		if values.get('order_id') and values.get('product_id') and any(f not in values for f in onchange_fields):
