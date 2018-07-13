@@ -9,7 +9,6 @@ class SaleOrderLine(models.Model):
 	@api.multi
 	@api.onchange('product_id')
 	def get_cost(self):
-		print "get cost is called========="
 		if not self.product_id:
 			return False
 
@@ -27,8 +26,6 @@ class SaleOrderLine(models.Model):
 			line = self.new(values)
 			line.product_id_change()
 			line.get_cost()
-			print "values after product_id_change()"
-			print values
 			for field in onchange_fields:
 				if field not in values:
 					values[field] = line._fields[field].convert_to_write(line[field])
