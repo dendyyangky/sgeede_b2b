@@ -31,8 +31,8 @@
 	'depends': ['sale', 'point_of_sale'],
 	'init_xml': [],
 	'update_xml': [
-		'views/product_view.xml',
-		'views/point_of_sale.xml',
+		'views/product_extend_view.xml',
+		'views/point_of_sale_extend.xml',
 		'views/account_invoice_workflow.xml',
 	],
 	'qweb': ['static/src/xml/*.xml'],

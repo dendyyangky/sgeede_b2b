@@ -44,8 +44,7 @@
     'price': 14.99,
     'currency': 'EUR',
     'images': [
-        'images/main_screenshot.png',
-        'images/sgeede.png'
+        'images/icon.png',
     ]
 }
 
