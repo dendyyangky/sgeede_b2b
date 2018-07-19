@@ -33,7 +33,6 @@ odoo.define('sgeede_minimum_price.point_of_sale_extend', function (require) {
 		},
 
 		validate_order: function(force_validation){
-			console.log("custom validate order!");
 			if (this.check_min_price(force_validation)) {
 			this._super(force_validation);
 			}

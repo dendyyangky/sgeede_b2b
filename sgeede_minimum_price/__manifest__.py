@@ -7,7 +7,7 @@
 	'description': """Lock and control your minimum sale price to POS, Sales Order and Invoice""",
 	'author': 'SGEEDE',
 	'website': 'http://www.sgeede.com',
-	'depends': ['sale', 'point_of_sale'],
+	'depends': ['sale'],
 	'data': [
 		'views/product_view.xml',
 		'views/point_of_sale.xml',
