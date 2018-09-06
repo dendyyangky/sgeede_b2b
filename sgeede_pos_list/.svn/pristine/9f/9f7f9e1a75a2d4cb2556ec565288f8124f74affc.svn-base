@@ -1,0 +1,39 @@
+.product-list-view {
+	overflow: hidden;
+}
+.product-list-view .product-table-list {
+	width: 100%;
+	table-layout: fixed;
+	font-size: 16px;
+}
+.product-list-view .product-table-list thead tr {
+	display: block;
+	background: #EEEEEF;
+}
+.product-list-view .product-table-list tbody {
+	width: 100%;
+	overflow: auto;
+	padding: 0 !important;
+}
+.product-list-view .product-table-list tbody tr {
+	cursor: pointer;
+}
+.product-list-view .product-table-list tbody tr:nth-child(odd) {
+	background: #F8F6FF;
+}
+.product-list-view .product-table-list tbody tr:hover {
+	background: #E0E0E0;
+}
+.product-list-view .product-table-list th, 
+.product-list-view .product-table-list td {
+	width: 1%;
+	padding: 6px 15px;
+}
+.product-list-view .product-table-list th:first-child, 
+.product-list-view .product-table-list td:first-child {
+	padding: 6px 15px 6px 10px;
+}
+.product-list-view .product-table-list th:last-child, 
+.product-list-view .product-table-list td:last-child {
+	padding: 6px 10px 6px 15px;
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+    <t t-name="ProductListWidget">
+        <t t-if="widget.pos.config.is_list_view">
+            <div class='product-list-container product-list-view'>
+                <table class="table table-striped product-table-list">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <div class="product-list-scroller touch-scrollable product-table-list">
+                    <table>
+                        <tbody class="product-list">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+
+        <t t-else="">
+            <div class='product-list-container'>
+                <div class="product-list-scroller touch-scrollable">
+                    <div class="product-list">
+                    </div>
+                </div>
+            </div>
+        </t>
+
+        <span class="placeholder-ScrollbarWidget" />
+    </t>
+
+    <t t-name="Product">
+        <t t-if="widget.pos.config.is_list_view">
+            <div class="product product-row" t-att-data-product-id="product.id">
+                <div class="product-col"><t t-esc="product.display_name"/></div>
+                <div class="product-col">
+                    <t t-if="product.to_weight">
+                        <t t-esc="widget.format_currency(product.get_price(pricelist, 1),'Product Price')"/>
+                    </t>
+
+                    <t t-else="">
+                        <t t-esc="widget.format_currency(product.get_price(pricelist, 1),'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name"/>
+                    </t> 
+                </div>
+            </div>
+        </t>
+
+        <t t-else="">
+            <span class='product' t-att-data-product-id="product.id">
+                <div class="product-img">
+                    <img t-att-src='image_url' /> 
+                    <t t-if="!product.to_weight">
+                        <span class="price-tag">
+                            <t t-esc="widget.format_currency(product.get_price(pricelist, 1),'Product Price')"/>
+                        </span>
+                    </t>
+                    <t t-if="product.to_weight">
+                        <span class="price-tag">
+                            <t t-esc="widget.format_currency(product.get_price(pricelist, 1),'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name"/>
+                        </span>
+                    </t>
+                </div>
+                <div class="product-name">
+                    <t t-esc="product.display_name"/>
+                </div>
+            </span>
+        </t>
+    </t>
+
+</templates>

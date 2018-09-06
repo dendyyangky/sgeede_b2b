@@ -1,0 +1,12 @@
+/* Popup */
+.pos .modal-dialog .popup .error {
+	font-size: 16px;
+	font-style: italic;
+	color: #FF0000;
+}
+.pos .modal-dialog .popup-lockscreen {
+	height: 250px;
+}
+.pos .modal-dialog .popup-lockscreen input {
+	font-size: 16px;
+}

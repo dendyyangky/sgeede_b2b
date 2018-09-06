@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="LockScreenWidget">
+        <div class="oe_status lock">
+            <i class="fa fa-lock"></i>
+        </div>
+    </t>
+
+    <t t-name="LockScreenPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-lockscreen">
+                <p class="title"><i class="fa fa-lock"></i> Locked Screen</p>
+
+                <p class="error"></p>
+                <p class="body">
+                    <input type="password" name="password" placeholder="Password..."/>
+                </p>
+
+                <div class="footer">
+                    <div class="button confirm">
+                        Unlock
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

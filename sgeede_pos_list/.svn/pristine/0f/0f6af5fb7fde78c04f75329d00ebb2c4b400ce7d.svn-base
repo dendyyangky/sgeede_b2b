@@ -1,0 +1,81 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12" style="width:88%;">
+            <h2 class="oe_slogan">SGEEDE Custom Point of Sale</h2>
+            <h3 class="oe_slogan">Enchance your point of sale with extra feature</h3>
+        </div>
+        <div class="oe_span6" style="width:44%;">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="sgeede_sc_01.png">
+            </div>
+        </div>
+        <div class="oe_span6" style="width:44%;">
+            <p class="oe_mt32">
+                SGEEDE Custom Point of Sale enchances your ui with features that streamlined the point of sale and while giving the option for users to change their ui and switch back and forth between the default ui or sgeede custom ui. This feature can be found and activated in the pos config menu.<br/>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12" style="width:88%;">
+            <h2 class="oe_slogan">List View for Your Point of Sale</h2>
+        </div>
+        <div class="oe_span6" style="width:44%;">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="sgeede_sc_02.png">
+            </div>
+        </div>
+        <div class="oe_span6" style="width:44%;">
+            <p class="oe_mt32">
+                Streamline and function focused, the list view allows point of sale operators to get straight to the product quickly. Removing the picture of the product to increase your screen real estate for the product information and allowing more products to be shown on the list at the same time.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12" style="width:88%">
+            <h2 class="oe_slogan">Flexible and Full-Benefit Enhancement Module</h2>
+        </div>
+        <div class="oe_span6" style="width:44%;">
+            <p class="oe_mt32">
+                <ul>
+                    <li>Easy to use.</li>
+                    <li>Simple UI Switch</li>
+                    <li>Enchanced POS View</li>
+                    <li>Neat and Clean Design</li>
+                    <li>Function Focused Module</li>
+                    <li>Work perfectly with Odoo point of sale.</li>
+                    <li>Easy and Handy module.</li>
+                    <li>Fast response support at <a href="mailto: enquiry@sgeede.com">enquiry@sgeede.com</a>.</li>
+                </ul>
+            </p>
+        </div>
+        <div class="oe_span6" style="width:44%;">
+            <div class="oe_row_img oe_centered">
+                <img class="oe_picture oe_screenshot" src="sgeede_sc_03.png">
+            </div>
+        </div>
+    </div>
+</section>  
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12" style="width:88%;">
+            <h2 class="oe_slogan">Support and Modifiable</h2>
+        </div>
+        <div class="oe_span6" style="width:44%;">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="sgeede.png">
+            </div>
+        </div>
+        <div class="oe_span6" style="width:44%;">
+            <p class="oe_mt32">
+We are ready to support you for this module by email us at <a href="mailto: enquiry@sgeede.com">enquiry@sgeede.com</a>. You can expect our reply in 24 Hours. We are also able to Develope module according to your needs. Please feel free to visit us at <a href="http://www.sgeede.com">www.sgeede.com</a>
+            </p>
+        </div>
+    </div>
+</section>
