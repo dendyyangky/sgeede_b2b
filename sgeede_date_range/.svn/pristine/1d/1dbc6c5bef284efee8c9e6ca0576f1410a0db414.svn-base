@@ -1,0 +1,77 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Date Range Feature Presents by SGEEDE</h2>
+            <h3 class="oe_slogan">Easy to Use and User Friendly feature to enchance your search</h3>
+        </div>
+        <div class="oe_span6">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="show_01.png">
+            </div>
+        </div>
+        <div class="oe_span6">
+            <p class="oe_mt32">
+Search with ease with SGEEDE Date Range module, and quickly filter your search in between two dates.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Extra Filtering</h2>
+        <div class="oe_span6">
+            <p class="oe_mt32">
+<ul>
+    <li>Easy to use.</li>
+    <li>More Efficient.</li>
+    <li>Neat Feature.</li>
+    <li>Simple.</li>
+    <li>Powerfull Filter</li>
+    <li>Fast response support at <a href="mailto: enquiry@sgeede.com">enquiry@sgeede.com</a>.</li>
+</ul>
+            </p>
+        </div>
+        <div class="oe_span6">
+            <div class="oe_row_img oe_centered">
+                <img class="oe_picture oe_screenshot" src="show_02.png">
+            </div>
+        </div>
+    </div>
+</section>  
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Install It and Feel the Difference.</h2>
+        </div>
+        <div class="oe_span6">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="show_03.png">
+            </div>
+        </div>
+        <div class="oe_span6">
+            <p class="oe_mt32">
+With this feature, extra filtering option will be added to the date and datetime types filters, allowing you to search more efficiently and also saving it as part of your favourite search filter.
+            </p>
+        </div>
+    </div>
+</section> 
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Support and Modifiable</h2>
+        </div>
+        <div class="oe_span6">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="sgeede.png">
+            </div>
+        </div>
+        <div class="oe_span6">
+            <p class="oe_mt32">
+We are ready to support you for this module by email us at <a href="mailto: enquiry@sgeede.com">enquiry@sgeede.com</a>. You can expect our reply in 24 Hours. We are also able to Develope module according to your needs. Please feel free to visit us at <a href="http://www.sgeede.com">www.sgeede.com</a>
+            </p>
+        </div>
+    </div>
+</section>
