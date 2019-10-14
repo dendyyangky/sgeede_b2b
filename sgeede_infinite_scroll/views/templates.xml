@@ -1,41 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<template id="products_infinite_scroll" inherit_id="website_sale.products" active="True" customize_show="True" name="SGEEDE Infinite Scroll">
-		<xpath expr="//div[@id='products_grid']//table" position="attributes">
-			<attribute name="t-attf-class">sgeede-infinite-scroll</attribute>
-		</xpath>
+    <template id="website_sale.products_list_view" inherit_id="website_sale.products" active="False" customize_show="True" name="List View" priority="20">        
+        <xpath expr="//div[@id='products_grid']//table" position="replace">
+            <t t-foreach="products" t-as="product">
+                <div class="oe_product oe_list oe_product_cart sgeede-infinite-get" t-att-data-publish="product.website_published and 'on' or 'off'">
+                    <t t-call="website_sale.products_item">
+                        <t t-set="show_publish" t-value="True" />
+                    </t>
+                </div>
+            </t>
+            <t t-if="category">
+                <div class="sgeede-infinite-pagination">
+                    <t t-if="int(pager['page']['num']) + 1 &lt;= int(pager['page_count'])">
+                        <a t-att-href="pager['page_next']['url']" style="display: none">Page <span t-esc="int(pager['page']['num']) + 1"/>
+                        </a>
+                    </t>
+                    <span class="max-page" t-esc="pager['page_count']" style="display: none"/>
+                </div>
+            </t>
+            <t t-if="not category">
+                <div class="sgeede-infinite-pagination">
+                    <t t-if="int(pager['page']['num']) + 1 &lt;= int(pager['page_count'])">
+                        <a t-att-href="pager['page_next']['url']" style="display: none">Page <span t-esc="int(pager['page']['num']) + 1"/>
+                        </a>
+                    </t>
+                    <span class="max-page" t-esc="pager['page_count']" style="display: none"/>
+                </div>
+            </t>
+        </xpath>
+    </template>
 
-		<xpath expr="//div[@id='products_grid']//table//tbody//tr[@t-foreach='bins']" position="attributes">
-			<attribute name="t-attf-class">sgeede-infinite-get</attribute>
-		</xpath>
+    <template id="products_infinite_scroll" inherit_id="website_sale.products" active="True" customize_show="True" name="SGEEDE Infinite Scroll" priority="18">
+        <xpath expr="//div[@id='products_grid']" position="attributes">
+            <attribute name="class" add="sgeede-infinite-scroll" separator=" "/>
+        </xpath>
 
-		<xpath expr="//div[@id='products_grid']//table//tbody" position="inside">
-			<t t-if="category">
-				<tr class="sgeede-infinite-pagination">
-					<t t-if="int(pager['page']['num']) + 1 &lt;= int(pager['page_count'])">
-						<td><a t-att-href="pager['page_next']['url']" style="display: none">Page <span t-esc="int(pager['page']['num']) + 1"/>
-						</a></td>
-						<!-- how to check category ? -->
-					</t>
-					<td><span class="max-page" t-esc="pager['page_count']" style="display: none"/></td>
-				</tr>
-			</t>
-			<t t-if="not category">
-				<tr class="sgeede-infinite-pagination">
-					<t t-if="int(pager['page']['num']) + 1 &lt;= int(pager['page_count'])">
-						<td><a t-att-href="pager['page_next']['url']" style="display: none">Page <span t-esc="int(pager['page']['num']) + 1"/>
-						</a></td>
-						<!-- taken from website.pager allow sorting functionality -->
-					</t>
-					<td><span class="max-page" t-esc="pager['page_count']" style="display: none"/></td>
-				</tr>
-			</t>
-		</xpath>
-	</template>
+        <xpath expr="//div[@id='products_grid']//table//tbody//tr[@t-foreach='bins']" position="attributes">
+            <attribute name="t-attf-class">sgeede-infinite-get</attribute>
+        </xpath>
 
-	<template id="disable_pagination" inherit_id="website.pager" active="True" customize_show="True" name="Disable Pagination">
-		<xpath expr="//ul" position="replace">
-				<!-- Remove Pagination -->
-		</xpath>
-	</template>
+        <xpath expr="//div[@id='products_grid']//table//tbody" position="inside">
+            <t t-if="category">
+                <tr class="sgeede-infinite-pagination">
+                    <t t-if="int(pager['page']['num']) + 1 &lt;= int(pager['page_count'])">
+                        <td><a t-att-href="pager['page_next']['url']" style="display: none">Page <span t-esc="int(pager['page']['num']) + 1"/>
+                        </a></td>
+                    </t>
+                    <td><span class="max-page" t-esc="pager['page_count']" style="display: none"/></td>
+                </tr>
+            </t>
+            <t t-if="not category">
+                <tr class="sgeede-infinite-pagination">
+                    <t t-if="int(pager['page']['num']) + 1 &lt;= int(pager['page_count'])">
+                        <td><a t-att-href="pager['page_next']['url']" style="display: none">Page <span t-esc="int(pager['page']['num']) + 1"/>
+                        </a></td>
+                    </t>
+                    <td><span class="max-page" t-esc="pager['page_count']" style="display: none"/></td>
+                </tr>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="disable_pagination" inherit_id="website.pager" active="True" customize_show="True" name="Disable Pagination">
+        <xpath expr="//ul" position="replace">
+            <!-- Remove Pagination -->
+        </xpath>
+    </template>
 </odoo>

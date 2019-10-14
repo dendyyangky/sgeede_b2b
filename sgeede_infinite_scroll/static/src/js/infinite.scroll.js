@@ -143,7 +143,11 @@
             opts.loading.selector = opts.loading.selector || opts.contentSelector;
 
             // Define loading.msg
-            opts.loading.msg = opts.loading.msg || $('<tr id="infscr-loading"><td colspan="100%" style="text-align: center"><div>' + opts.loading.msgText + '</div><img alt="Loading..." src="' + opts.loading.img + '" /></td></tr>');
+            if(opts.loading.isTable){
+                opts.loading.msg = opts.loading.msg || $('<tr id="infscr-loading"><td colspan="100%" style="text-align: center"><div>' + opts.loading.msgText + '</div><img alt="Loading..." src="' + opts.loading.img + '" /></td></tr>');
+            } else {
+                opts.loading.msg = opts.loading.msg || $('<div class="text-center"><div>' + opts.loading.msgText + '</div><img alt="Loading..." src="' + opts.loading.img + '" /></div>');
+            }            
 
             // Preload loading.img
             (new Image()).src = opts.loading.img;
@@ -747,7 +751,7 @@
 
                     // no errors!
                     instance[options].apply(instance, args);
-	                return false;
+                    return false;
                 });
 
             break;
@@ -757,27 +761,27 @@
 
                 this.each(function () {
 
-	                var instance = $.data(this, 'infinitescroll');
+                    var instance = $.data(this, 'infinitescroll');
 
-	                if (instance) {
+                    if (instance) {
 
-	                    // update options of current instance
-	                    instance.update(options);
+                        // update options of current instance
+                        instance.update(options);
 
-	                } else {
+                    } else {
 
-	                    // initialize new instance
-	                    instance = new $.infinitescroll(options, callback, this);
+                        // initialize new instance
+                        instance = new $.infinitescroll(options, callback, this);
 
-	                    // don't attach if instantiation failed
-	                    if (!instance.failed) {
-	                        $.data(this, 'infinitescroll', instance);
-	                    }
+                        // don't attach if instantiation failed
+                        if (!instance.failed) {
+                            $.data(this, 'infinitescroll', instance);
+                        }
 
-	                }
-	                return false;
+                    }
+                    return false;
 
-            	});
+                });
 
             break;
 

@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-
 {
 	"name": "SGEEDE Infinite Scroll",
 	"version": "1.0",
