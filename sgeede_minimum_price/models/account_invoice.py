@@ -3,6 +3,7 @@ from odoo.exceptions import UserError
 
 class AccountInvoice(models.Model): 
 	_inherit = 'account.invoice'
+
 	@api.multi
 	def check_minimum_price(self):
 		for line in self.invoice_line_ids:
@@ -13,7 +14,8 @@ class AccountInvoice(models.Model):
 
 	@api.multi
 	def action_invoice_open(self):
-		self.check_minimum_price()
+		if self.type == 'out_invoice':
+			self.check_minimum_price()
 		#found a way to call the original function without override !
 		super(AccountInvoice, self).action_invoice_open()
 		#this means we're calling account invoice as parent of this inherited model and
