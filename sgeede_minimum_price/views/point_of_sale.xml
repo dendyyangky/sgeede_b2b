@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="assets" name="sgeede_minimum_price assets" inherit_id="web.assets_backend">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/sgeede_minimum_price/static/src/js/point_of_sale_extend.js"></script>
+		</xpath>
+	</template>
+</odoo>
